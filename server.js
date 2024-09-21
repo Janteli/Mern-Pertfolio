@@ -4,7 +4,9 @@ const dbConfig = require("./config/dbConfig")
 const app = express()
 const path = require('path')
 const cors = require('cors');
-app.use(cors());
+app.use(cors({
+    origin: "https://mern-pertfolio-01.onrender.com"
+}));
 
 const portfolioRoute = require("./routes/portfolioRoute.js")
 
@@ -17,13 +19,12 @@ app.use("/api/portfolio", portfolioRoute)
 const PORT = process.env.PORT || 4000
 // dbConfig()
 // deployment
-// const path = require("path")
 if(process.env.NODE_ENV === "production")
 {
     const dirPath = path.resolve()
-    app.use(express.static(path.join(__dirname, "client/build")))
+    app.use(express.static("./client/dist"))
     app.get("*", (req, res)=>{
-        res.sendFile(path.join(__dirname, "client/build/index.html"))
+        res.sendFile(path.resolve(dirPath, "./client/dist", "index.html"))
     })
 }
 app.listen(PORT, ()=>{
