@@ -19,14 +19,14 @@ app.use("/api/portfolio", portfolioRoute)
 const PORT = process.env.PORT || 4000
 // dbConfig()
 // deployment
-// if(process.env.NODE_ENV === "production")
-// {
-//     const dirPath = path.resolve()
-//     app.use(express.static("./client/dist"))
-//     app.get("*", (req, res)=>{
-//         res.sendFile(path.resolve(dirPath, "./client/dist", "index.html"))
-//     })
-// }
+if (process.env.NODE_ENV === "production") {
+    const dirPath = path.resolve();
+    app.use(express.static(path.join(dirPath, "/client/build")));
+    app.get("*", (req, res) => {
+        res.sendFile(path.resolve(dirPath, "client", "build", "index.html"));
+    });
+}
+
 app.listen(PORT, ()=>{
     console.log(`backend server is starting at ${PORT}`);
 })
